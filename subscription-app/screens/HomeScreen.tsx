@@ -1,6 +1,5 @@
 import {
   View,
-  SafeAreaView,
   Text,
   Image,
   TouchableOpacity,
@@ -10,16 +9,24 @@ import {
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import ActionRow from "../components/ActionRow";
+import SafeArea from "../components/SafeAreaView";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootSctackParamList } from "../App";
+
+type NavigationProp = NativeStackNavigationProp<RootSctackParamList, "Home">;
 
 const isAndroid = Platform.OS === "android";
 
 const HomeScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
   return (
-    <SafeAreaView
-      className={`${isAndroid && "mt-6"} flex-1 bg-gray-100 relative`}
-    >
+    <SafeArea>
       <ScrollView>
-        <TouchableOpacity className="absolute z-50 top-5 right-10 items-center">
+        <TouchableOpacity
+          className="absolute z-50 top-5 right-10 items-center"
+          onPress={() => navigation.navigate("Paywall")}
+        >
           <Ionicons name="person-circle" size={30} color="#E5962D" />
           <Text className="text-center text-[#E5962D]">UPGRADE</Text>
         </TouchableOpacity>
@@ -29,14 +36,53 @@ const HomeScreen = () => {
           }}
           className="w-full h-64"
         />
+        <View className="flex-row justify-center">
+          <ActionRow
+            title="Track Workout"
+            screen="Demo"
+            color="#E5962D"
+            icon="fitness"
+            vertical
+          ></ActionRow>
+          <ActionRow
+            title="Browse Workouts"
+            screen="Demo"
+            color="#1982C4"
+            icon="library"
+            vertical
+          ></ActionRow>
+        </View>
         <ActionRow
           title="Connect with Friends"
           screen="Demo"
           color="#F44174"
           icon="share-social"
+          requiresPro
+        ></ActionRow>
+        <ActionRow
+          title="Add an Exercize"
+          screen="Demo"
+          color="#8AC926"
+          icon="add-circle"
+          requiresPro
+        ></ActionRow>
+
+        <ActionRow
+          title="Create a Routine"
+          screen="Demo"
+          color="#C03221"
+          icon="md-time"
+          requiresPro
+        ></ActionRow>
+        <ActionRow
+          title="Join Challenges"
+          screen="Demo"
+          color="#23967F"
+          icon="trophy"
+          requiresPro
         ></ActionRow>
       </ScrollView>
-    </SafeAreaView>
+    </SafeArea>
   );
 };
 
